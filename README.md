@@ -12,6 +12,6 @@ MobileNet:https://arxiv.org/abs/1704.04861
 
 Lime:https://arxiv.org/abs/1602.04938
 
-Our model:https://github.com/maxnorris17/X-Ray
+Our model referencce to: https://github.com/maxnorris17/X-Ray
 
 
