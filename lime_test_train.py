@@ -43,7 +43,7 @@ color = sns.color_palette()
 
 #%%
 data_dir = Path('./data/chest_xray')
-test_dir = data_dir / 'test'
+test_dir = data_dir / 'train'
 
 # Preparing test data
 normal_cases_dir = test_dir / 'NORMAL'
@@ -59,41 +59,50 @@ pneumonia_cases_virus = pneumonia_cases_dir.glob('*virus*')
 test_data = []
 test_labels = []
 
+index=0
 for img in normal_cases:
-    img = cv2.imread(str(img))
-    img = cv2.resize(img, (224, 224))
-    if img.shape[2] == 1:
-        img = np.dstack([img, img, img])
-    else:
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = img.astype(np.float32) / 255.
-    label = to_categorical(0, num_classes=3)
-    test_data.append(img)
-    test_labels.append(label)
+    if index < 100:
+        img = cv2.imread(str(img))
+        img = cv2.resize(img, (224, 224))
+        if img.shape[2] == 1:
+            img = np.dstack([img, img, img])
+        else:
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = img.astype(np.float32) / 255.
+        label = to_categorical(0, num_classes=3)
+        index+=1
+        test_data.append(img)
+        test_labels.append(label)
 
+index=0
 for img in pneumonia_cases_bactreia:
-    img = cv2.imread(str(img))
-    img = cv2.resize(img, (224, 224))
-    if img.shape[2] == 1:
-        img = np.dstack([img, img, img])
-    else:
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = img.astype(np.float32) / 255.
-    label = to_categorical(1, num_classes=3)
-    test_data.append(img)
-    test_labels.append(label)
+    if index < 100:
+        img = cv2.imread(str(img))
+        img = cv2.resize(img, (224, 224))
+        if img.shape[2] == 1:
+            img = np.dstack([img, img, img])
+        else:
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = img.astype(np.float32) / 255.
+        label = to_categorical(1, num_classes=3)
+        index += 1
+        test_data.append(img)
+        test_labels.append(label)
 
+index=0
 for img in pneumonia_cases_virus:
-    img = cv2.imread(str(img))
-    img = cv2.resize(img, (224, 224))
-    if img.shape[2] == 1:
-        img = np.dstack([img, img, img])
-    else:
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = img.astype(np.float32) / 255.
-    label = to_categorical(2, num_classes=3)
-    test_data.append(img)
-    test_labels.append(label)
+    if index < 100:
+        img = cv2.imread(str(img))
+        img = cv2.resize(img, (224, 224))
+        if img.shape[2] == 1:
+            img = np.dstack([img, img, img])
+        else:
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = img.astype(np.float32) / 255.
+        label = to_categorical(2, num_classes=3)
+        index += 1
+        test_data.append(img)
+        test_labels.append(label)
 
 test_data = np.array(test_data)
 test_labels = np.array(test_labels)
@@ -127,7 +136,7 @@ from lime import lime_image
 from skimage.segmentation import mark_boundaries
 
 #%%
-image_choose=316
+image_choose=275
 print('prediction:' + ddic[preds[image_choose]] + '\ntrue:' + ddic[true_label[image_choose]])
 
 #%%
@@ -171,7 +180,7 @@ plt.title('Top 10 pros and cons')
 
 plt.suptitle('Case'+str(image_choose)+' -------- prediction:' + ddic[preds[image_choose]] \
              + '   &   true:' + ddic[true_label[image_choose]])
-plt.savefig('./lime_3classes/'+'Case'+str(image_choose)+' -------- prediction:' + ddic[preds[image_choose]] \
+plt.savefig('./lime_3classes_new/'+'Case'+str(image_choose)+' -------- prediction:' + ddic[preds[image_choose]] \
              + '   &   true:' + ddic[true_label[image_choose]])
 # plt.close()
 
